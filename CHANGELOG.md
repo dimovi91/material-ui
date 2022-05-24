@@ -2,8 +2,6 @@
 
 ## 5.4.0
 
-<!-- generated comparing v5.3.1..master -->
-
 _Feb 1, 2022_
 
 A big thanks to the 22 contributors who made this release possible. Here are some highlights ✨:
