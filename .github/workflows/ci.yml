@@ -23,7 +23,7 @@ jobs:
         with:
           # fetch all tags which are required for `yarn release:changelog`
           fetch-depth: 0
-      - uses: mnajdova/github-action-required-labels@v2.0
+      - uses: mnajdova/github-action-required-labels@v2.0 # ensures that at least one label is added on the PR
         with:
           mode: minimum
           count: 1
