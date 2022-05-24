@@ -32,8 +32,6 @@ We are providing two Universal Module Definition (UMD) files:
 - one for development: https://unpkg.com/@mui/material@latest/umd/material-ui.development.js
 - one for production: https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js
 
-<!-- #default-branch-switch -->
-
 ## What's next?
 
 You now have a working example project.
