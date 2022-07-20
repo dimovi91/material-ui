@@ -433,6 +433,23 @@ describe('<Tooltip />', () => {
       expect(getByRole('tooltip')).toBeVisible();
       expect(handleFocus.callCount).to.equal(1);
     });
+
+    it('should handle `onMouseOver` forwarding', () => {
+      const handleMouseOver = spy();
+      const { getByRole } = render(
+        <Tooltip enterDelay={100} title="Tooltip">
+          <button id="testChild" type="submit" onMouseOver={handleMouseOver}>
+            Hello World
+          </button>
+        </Tooltip>,
+      );
+
+      fireEvent.mouseOver(getByRole('button'));
+      clock.tick(100);
+
+      expect(getByRole('tooltip')).toBeVisible();
+      expect(handleMouseOver.callCount).to.equal(1);
+    });
   });
 
   describe('prop: delay', () => {
@@ -761,6 +778,7 @@ describe('<Tooltip />', () => {
                   name: 'foo',
                   enabled: true,
                   phase: 'main',
+                  fn: () => {},
                 },
               ],
             },
@@ -869,7 +887,7 @@ describe('<Tooltip />', () => {
       expect(eventLog).to.deep.equal(['blur', 'close']);
     });
 
-    // https://github.com/mui-org/material-ui/issues/19883
+    // https://github.com/mui/material-ui/issues/19883
     it('should not prevent event handlers of children', () => {
       const handleFocus = spy((event) => event.currentTarget);
       // Tooltip should not assume that event handlers of children are attached to the

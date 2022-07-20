@@ -2,9 +2,11 @@
 import path from 'path';
 import fse from 'fs-extra';
 import { pageToTitle } from 'docs/src/modules/utils/helpers';
-import allPages from 'docs/src/pages';
+import materialPages from 'docs/data/material/pages';
+import systemPages from 'docs/data/system/pages';
+import basePages from 'docs/data/base/pages';
 
-const EXCLUDES = ['/api', '/blog'];
+const EXCLUDES = ['/api', '/blog', '/x/react-'];
 
 async function run() {
   const translationsFilename = path.join(__dirname, '../translations/translations.json');
@@ -38,7 +40,7 @@ async function run() {
     });
   };
 
-  traverse(allPages);
+  traverse([...systemPages, ...basePages, ...materialPages]);
 
   await fse.writeFile(translationsFilename, `${JSON.stringify(output, null, 2)}\n`);
 }

@@ -153,6 +153,9 @@ export * from './FormLabel';
 export { default as Grid } from './Grid';
 export * from './Grid';
 
+export { default as Unstable_Grid2 } from './Unstable_Grid2';
+export * from './Unstable_Grid2';
+
 export { default as Grow } from './Grow';
 export * from './Grow';
 
@@ -254,6 +257,9 @@ export * from './Popover';
 
 export { default as Popper } from './Popper';
 export * from './Popper';
+
+export { default as Portal } from './Portal';
+export * from './Portal';
 
 export { default as Radio } from './Radio';
 export * from './Radio';

@@ -2,7 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import FEATURE_TOGGLE from '../src/featureToggle';
 import {
   extractApiPage,
   extractPackageFile,
@@ -15,9 +14,9 @@ describe('buildApiUtils', () => {
   describe('extractApiPage', () => {
     it('return info for api page', () => {
       expect(
-        extractApiPage('/material-ui/docs/pages/material/api/accordion-actions.js'),
+        extractApiPage('/material-ui/docs/pages/material-ui/api/accordion-actions.js'),
       ).to.deep.equal({
-        apiPathname: '/material/api/accordion-actions',
+        apiPathname: '/material-ui/api/accordion-actions',
       });
     });
   });
@@ -106,7 +105,7 @@ describe('buildApiUtils', () => {
 
       expect(info.getDemos()).to.deep.equal([
         {
-          name: 'Button Group',
+          name: 'Button group',
           demoPathname: '/components/button-group/',
         },
         {
@@ -135,7 +134,7 @@ describe('buildApiUtils', () => {
           demoPathname: '/components/icons/',
         },
         {
-          name: 'Material Icons',
+          name: 'Material icons',
           demoPathname: '/components/material-icons/',
         },
       ]);
@@ -143,25 +142,22 @@ describe('buildApiUtils', () => {
   });
 
   describe('getMaterialComponentInfo', () => {
-    beforeEach(function test() {
-      if (!FEATURE_TOGGLE.enable_product_scope) {
-        this.skip();
-      }
-    });
     it('return correct info for material component file', () => {
       const info = getMaterialComponentInfo(
         path.join(process.cwd(), `/packages/mui-material/src/Button/Button.js`),
       );
       sinon.assert.match(info, {
         name: 'Button',
-        apiPathname: '/material/api/button/',
+        apiPathname: '/material-ui/api/button/',
         muiName: 'MuiButton',
-        apiPagesDirectory: sinon.match((value) => value.endsWith('docs/pages/material/api')),
+        apiPagesDirectory: sinon.match((value) =>
+          value.endsWith(path.join('docs', 'pages', 'material-ui', 'api')),
+        ),
       });
 
       expect(info.getInheritance('ButtonBase')).to.deep.equal({
         name: 'ButtonBase',
-        apiPathname: '/material/api/button-base/',
+        apiPathname: '/material-ui/api/button-base/',
       });
 
       let existed = false;
@@ -173,12 +169,12 @@ describe('buildApiUtils', () => {
       if (existed) {
         expect(info.getDemos()).to.deep.equal([
           {
-            name: 'Button Group',
-            demoPathname: '/material/react-button-group/',
+            name: 'Button group',
+            demoPathname: '/material-ui/react-button-group/',
           },
           {
             name: 'Buttons',
-            demoPathname: '/material/react-button/',
+            demoPathname: '/material-ui/react-button/',
           },
         ]);
       }
@@ -186,11 +182,6 @@ describe('buildApiUtils', () => {
   });
 
   describe('getBaseComponentInfo', () => {
-    beforeEach(function test() {
-      if (!FEATURE_TOGGLE.enable_product_scope) {
-        this.skip();
-      }
-    });
     it('return correct info for base component file', () => {
       const info = getBaseComponentInfo(
         path.join(process.cwd(), `/packages/mui-base/src/ButtonUnstyled/ButtonUnstyled.tsx`),
@@ -199,7 +190,9 @@ describe('buildApiUtils', () => {
         name: 'ButtonUnstyled',
         apiPathname: '/base/api/button-unstyled/',
         muiName: 'MuiButton',
-        apiPagesDirectory: sinon.match((value) => value.endsWith('docs/pages/base/api')),
+        apiPagesDirectory: sinon.match((value) =>
+          value.endsWith(path.join('docs', 'pages', 'base', 'api')),
+        ),
       });
 
       info.readFile();
@@ -215,8 +208,8 @@ describe('buildApiUtils', () => {
       if (existed) {
         expect(info.getDemos()).to.deep.equal([
           {
-            name: 'Buttons',
-            demoPathname: '/material/react-button/',
+            name: 'Button',
+            demoPathname: '/base/react-button/',
           },
         ]);
       }
